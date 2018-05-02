@@ -18,7 +18,7 @@
   "The backend to use for IDE features. Possible values are `anaconda'
 and `lsp'.")
 
-(defvar python-enable-yapf-format-on-save nil
+(defvar python-enable-yapf-format-on-save t
   "If non-nil, automatically format code with YAPF on save.")
 
 (defvar python-test-runner 'nose
@@ -30,7 +30,7 @@ and `lsp'.")
 (defvar python-fill-column 79
   "Fill column value for python buffers")
 
-(defvar python-tab-width 4
+(defvar python-tab-width 2
   "Tab width value for python buffers")
 
 (defvar python-auto-set-local-pyenv-version 'on-visit
@@ -43,5 +43,11 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 Possible values are `on-visit', `on-project-switch' or `nil'.")
 
-(defvar python-sort-imports-on-save nil
+(defvar python-sort-imports-on-save t
   "If non-nil, automatically sort imports on save.")
+
+(add-hook 'python-mode-hook (lambda ()
+                               (flycheck-mode 1)
+                               (semantic-mode 1)
+                               (setq flycheck-checker 'python-pylint
+                                     flycheck-pylintrc "~/.pylintrc")))
